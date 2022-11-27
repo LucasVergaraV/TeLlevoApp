@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="principal">
+    <img src="assets/img/Logo.png" alt="">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+  <ion-card-header>
+    <ion-title><h1>Iniciar Sesion</h1></ion-title>
+  </ion-card-header>
+  <ion-card-content>
+    <!-- Formulario nombre usuario -->
+    <ion-item class="ion-margin-top">
+      <ion-label position="floating" [(ngModel)]="user">Usuario</ion-label>
+      <ion-input ></ion-input>
+    </ion-item>
+    <!-- Formulario contraseña -->
+    <ion-item class="ion-margin-top">
+      <ion-label position="floating" [(ngModel)]="password">Contraseña</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <!-- Indicamos mediante el (click) la funcion a quien referenciara-->
+        <ion-button class="ion-margin-top principal" (click)="verificarUsuario()" expand="full">Ingresar</ion-button>
+        <ion-button class="ion-margin-top secundario" (click)="mostrarFormularioRegistrar()" expand="full">Registrar</ion-button>
+        <br>
+        <ion-item><a href="">¿Olvidaste tu contraseña?</a></ion-item> 
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
+</ion-content>
