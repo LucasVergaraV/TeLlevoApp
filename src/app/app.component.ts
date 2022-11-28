@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -7,7 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
+    { title: 'Perfil', url: '/perfil', icon: 'person' },
   ];
   public labels = [];
-  constructor() {}
+  constructor(private router: Router) {}
+  
+  cerrarSesion(){
+    this.router.navigate(['/login']);
+  }
 }
