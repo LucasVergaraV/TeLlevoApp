@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-fab  slot="fixed" vertical="top" horizontal="end" [edge]="true">
-    <ion-fab-button class="principal" (click)="mostrarFormularioInfoExtra()" >
+    <ion-fab-button class="principal" (click)="openModal()" >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -49,27 +49,15 @@
     <ion-card-content>
       <p>Carrera</p>
       <ion-item>
-        <ion-label>{{infoUsuario.nombre}}</ion-label>
+        <ion-label>{{infoExtraUsuario.carrera}}</ion-label>
       </ion-item>
       <p>Semestre</p>
       <ion-item>
-        <ion-label>Semestre en curso</ion-label>
-        <ion-select placeholder="Make a Selection">
-          <ion-select-option value="1">I</ion-select-option>
-          <ion-select-option value="2">II</ion-select-option>
-          <ion-select-option value="3">III</ion-select-option>
-          <ion-select-option value="4">IV</ion-select-option>
-          <ion-select-option value="5">V</ion-select-option>
-          <ion-select-option value="6">VI</ion-select-option>
-          <ion-select-option value="7">VII</ion-select-option>
-          <ion-select-option value="8">VIII</ion-select-option>
-          <ion-select-option value="9">IX</ion-select-option>
-          <ion-select-option value="10">X</ion-select-option>
-        </ion-select>
+        <ion-label>{{infoExtraUsuario.semestre}}</ion-label>
       </ion-item>
       <p>N° de Celular</p>
       <ion-item>
-        <ion-label>{{infoUsuario.correo}}</ion-label>
+        <ion-label>{{infoExtraUsuario.numeroCelular}}</ion-label>
       </ion-item>
     </ion-card-content>
   </ion-card>

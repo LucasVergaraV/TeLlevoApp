@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { DbService } from '../services/db.service';
+import { ModalController } from '@ionic/angular';
+import { ModalExtraUsuarioPage } from '../modal-extra-usuario/modal-extra-usuario.page';
 
 @Component({
   selector: 'app-perfil',
@@ -9,63 +11,30 @@ import { DbService } from '../services/db.service';
 })
 export class PerfilPage implements OnInit {
 
-
+  infoUsuario = JSON.parse(localStorage.getItem('usuario')!)
+  infoExtraUsuario = JSON.parse(localStorage.getItem('extraUsuario')!)
   constructor(
     private dbService: DbService,
-    private alertController: AlertController) { }
+    private alertController: AlertController,
+    private modalCtrl: ModalController) { }
 
   ngOnInit() {
   }
-
-  infoUsuario = JSON.parse(localStorage.getItem('usuario')!)
-
-  // FORMULARIO REGISTRAR
-  async mostrarFormularioInfoExtra() {
-    const alert = await this.alertController.create({
-      header: 'Informacion Extra',
-      inputs: [
-        {
-          name: 'carrera',
-          type: 'text',
-          placeholder: 'Carrera'
-        },
-        {
-          name: 'semestre',
-          type: 'number',
-          placeholder: 'semestre actual',
-          min: 1,
-          max: 9
-        },
-        {
-          name: 'celular',
-          type: 'number',
-          placeholder: 'N° de celular',
-          attributes: {
-            maxlength: 9,
-          },min: 100000000,
-          max: 999999999
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log("Cancela Registro");
-          }
-        },
-        {
-          text: 'Registrar',
-          handler: (data) => {
-            this.almacenarExtraUsuario(this.infoUsuario.rut,data.carrera,data.semestre,data.celular)
-          }
-        }
-      ]
+  
+  async openModal(){
+    const modal = await this.modalCtrl.create({
+      component: ModalExtraUsuarioPage,
     });
+    modal.present();
 
-    await alert.present();
+    const { role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      
+    }
   }
+
+
 
   almacenarExtraUsuario(rut: string, carrera: string, semestre: number, celular: number){
     this.dbService.almacenarExtraUsuario(rut, carrera, semestre, celular);

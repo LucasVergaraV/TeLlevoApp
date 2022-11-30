@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule),
     canActivate: [IngresadoGuard]
+  },
+  {
+    path: 'modal-extra-usuario',
+    loadChildren: () => import('./modal-extra-usuario/modal-extra-usuario.module').then( m => m.ModalExtraUsuarioPageModule)
   }
 ];
 

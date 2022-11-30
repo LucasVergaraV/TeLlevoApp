@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar class="principal">
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Welcome</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item class="ion-margin-top">
+    <ion-label position="floating" >Carrera</ion-label>
+    <ion-input [(ngModel)]="infoExtraUsuario.carrera"></ion-input>
+  </ion-item>
+  <ion-item class="ion-margin-top">
+    <ion-label position="floating" >Semestre en curso</ion-label>
+    <ion-input [(ngModel)]="infoExtraUsuario.semestre"></ion-input>
+  </ion-item>
+  <ion-item class="ion-margin-top">
+    <ion-label position="floating" >Numero de celular</ion-label>
+    <ion-input [(ngModel)]="infoExtraUsuario.numeroCelular"></ion-input>
+  </ion-item>
+</ion-content>
