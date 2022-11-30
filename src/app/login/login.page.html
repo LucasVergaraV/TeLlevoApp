@@ -12,13 +12,13 @@
   <ion-card-content>
     <!-- Formulario nombre usuario -->
     <ion-item class="ion-margin-top">
-      <ion-label position="floating" [(ngModel)]="user">Usuario</ion-label>
-      <ion-input ></ion-input>
+      <ion-label position="floating" >Usuario</ion-label>
+      <ion-input [(ngModel)]="validacion.user"></ion-input>
     </ion-item>
     <!-- Formulario contraseña -->
     <ion-item class="ion-margin-top">
-      <ion-label position="floating" [(ngModel)]="password">Contraseña</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="validacion.password"></ion-input>
     </ion-item>
     <ion-row>
       <ion-col>

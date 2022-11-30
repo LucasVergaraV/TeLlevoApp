@@ -9,21 +9,47 @@ import { DbService } from '../services/db.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-user: string="";
-password:  string="";
-
-  constructor(private router: Router,private dbService: DbService, private alertController: AlertController,private toastController: ToastController) { 
-    
+  constructor(
+    private router: Router,
+    private dbService: DbService, 
+    private alertController: AlertController,
+    private toastController: ToastController) {
+      this.crearStorageInfoUsuario()
+      console.log("LC: StorageDesdeLogin"+localStorage.getItem('usuario'))
   }
 
   ngOnInit() {
+  }
+
+  infoUsuario = {
+    nombre: "",
+    rut: "",
+    correo: ""
+  }
+
+  crearStorageInfoUsuario(){
+    localStorage.setItem("usuario",JSON.stringify(this.infoUsuario))
+  }
+
+  validacion = {
+    user: "",
+    password: ""
   }
 // FORMULARIO REGISTRAR
   async mostrarFormularioRegistrar() {
     const alert = await this.alertController.create({
       header: 'Registrate',
       inputs: [
+        {
+          name: 'nombreCompleto',
+          type: 'text',
+          placeholder: 'Nombre Completo'
+        },
+        {
+          name: 'rut',
+          type: 'text',
+          placeholder: 'RUT'
+        },
         {
           name: 'correo',
           type: 'text',
@@ -47,8 +73,11 @@ password:  string="";
         {
           text: 'Registrar',
           handler: (data) => {
-            console.log("Confirma Registro");
-            this.almacenarUsuario(data.correo,data.contrasena)
+            console.log("LC: Confirma Registro");
+            console.log("LC: "+data.correo)
+            console.log("LC: "+data.contrasena)
+            console.log("LC: ------------------------")
+            this.almacenarUsuario(data.nombreCompleto,data.rut,data.correo,data.contrasena)
           }
         }
       ]
@@ -65,11 +94,11 @@ password:  string="";
     toast.present();
   }
 // FUNCION ALMACENAR USUARIOS
-  almacenarUsuario(correo:string, contrasena:string){
+  almacenarUsuario(usuario:string, rut:string, correo:string, contrasena:string){
     this.dbService.validarUsuario(correo).then((data) => {
       if(!data) { //Cuando el validarUsuario devuelve false el correo se guarda con la funcion dbServices.almacenarUsuario
         console.log("LC: USUARIO GUARDADO CORRECTAMENTE");
-        this.dbService.almacenarUsuario(correo, contrasena);
+        this.dbService.almacenarUsuario(usuario, rut, correo, contrasena);
         this.presentToast("Usuario creado correctamente",3000);
       }else{
         console.log("LC: CORREO ELECTRONICO REPETIDO");
@@ -80,17 +109,25 @@ password:  string="";
 
 // FUNCION VERIFICAR USUARIOS
   verificarUsuario(){
-    this.dbService.verificarUsuario(this.user, this.password).then((data) => {
+    this.dbService.verificarUsuario(this.validacion.user, this.validacion.password).then((data) => {
       if(!data) { //Si el usuario esta registrado en la BD la funcion verificarUsuario() devolvera True
         console.log("LC: NO PUDO INGRESAR");
         this.presentToast("Datos incorrectos, Intentelo nuevamente",3000);
       }else{
         console.log("LC: INGRESO CORRECTO");
-        this.router.navigate(['/credencial']);
+        localStorage.setItem('ingresado','true');
+        console.log("LC: "+localStorage.getItem('ingresado'))
+        this.usuarioListarInfo(this.validacion.user)
+        this.router.navigate(['/home']);
         this.presentToast("BIENVENIDO",3000);
         
       }
     })
   }
 
+  usuarioListarInfo(correo: string){
+    // const infoUser = this.dbService.listarInfoUsuario(correo)
+    this.dbService.listarInfoUsuario(correo);
+    
+  }
 }
