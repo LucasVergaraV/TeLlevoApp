@@ -7,30 +7,51 @@ import { triggerAsyncId } from 'async_hooks';
   providedIn: 'root'
 })
 export class DbService {
+  infoUsuario = {
+    nombre: "",
+    rut: "",
+    correo: ""
+  }
 
   constructor(private router: Router, private sqlite: SQLite) {
+    // CREACION TABLA USUARIO
     this.sqlite.create({
       name: 'db.datos',
       location: 'default'
     }).then((db: SQLiteObject)=> {
-      db.executeSql('CREATE TABLE IF NOT EXISTS USUARIO(MAIL VARCHAR(75),CONTRASENA VARCHAR(30))', []
+      db.executeSql('CREATE TABLE IF NOT EXISTS USUARIO(NOMBRE VARCHAR(50),RUT VARCHAR(15),MAIL VARCHAR(75),CONTRASENA VARCHAR(30))', []
       ).then(() =>{
-        console.log("LC: TABLA CREADA")
+        console.log("LC: TABLA USUARIO CREADA")
       }).catch(e => {
-        console.log("LC: TABLA NO CREADA")
+        console.log("LC: TABLA USUARIO NO CREADA")
       })
     }).catch(e => {
       console.log("LC: BD NO CREADA")
     })
+    // CREACION TABLA EXTRA_USUARIO
+    this.sqlite.create({
+      name: 'db.datos',
+      location: 'default'
+    }).then((db: SQLiteObject)=> {
+      db.executeSql('CREATE TABLE IF NOT EXISTS EXTRA_USUARIO(RUT VARCHAR(15),CARRERA VARCHAR(50),SEMESTRE NUMBER(2),CELULAR NUMBER(9))', []
+      ).then(() =>{
+        console.log("LC: TABLA EXTRA_USUARIO CREADA")
+      }).catch(e => {
+        console.log("LC: TABLA EXTRA_USUARIO NO CREADA")
+      })
+    }).catch(e => {
+      console.log("LC: BD NO CREADA")
+    })
+
   }
 // TABLA USUARIO
-  almacenarUsuario(correo: any, contrasena: any){
+  almacenarUsuario(usuario:any, rut:any, correo: any, contrasena: any){
     this.sqlite.create({
       name: 'db.datos',
       location: 'default'
     }).then((db: SQLiteObject)=> {
 
-      db.executeSql('INSERT INTO USUARIO VALUES(?, ?)', [correo, contrasena]
+      db.executeSql('INSERT INTO USUARIO VALUES(?, ?, ?, ?)', [usuario, rut, correo, contrasena]
       ).then(() =>{
         console.log("LC: USUARIO ALMACENADO")
       }).catch(e => {
@@ -59,15 +80,12 @@ export class DbService {
     }).catch(e => {
     })
   }
-  prueba:string="hola"
+
   verificarUsuario(correo: string, contrasena: string){
     return this.sqlite.create({
       name: 'db.datos',
       location: 'default'
     }).then((db: SQLiteObject)=> {
-      console.log("LC: correo =>"+correo)
-      console.log("LC: contrasena =>"+contrasena)
-      console.log("LC:"+this.prueba)
       return db.executeSql('SELECT COUNT(MAIL) AS CANTIDAD FROM USUARIO WHERE MAIL = ? AND CONTRASENA = ?', [correo, contrasena]
       ).then((data) =>{
         if(data.rows.item(0).CANTIDAD === 0){
@@ -80,4 +98,48 @@ export class DbService {
     }).catch(e => {
     })
   }
+
+  listarInfoUsuario(correo: string){
+    return this.sqlite.create({
+      name: 'db.datos',
+      location: 'default'
+    }).then((db: SQLiteObject)=> {
+      return db.executeSql('SELECT NOMBRE, RUT, MAIL FROM USUARIO WHERE MAIL = ?', [correo]
+      ).then((data) =>{
+        this.infoUsuario.nombre = data.rows.item(0).NOMBRE,
+        this.infoUsuario.rut = data.rows.item(0).RUT,
+        this.infoUsuario.correo = data.rows.item(0).MAIL
+        localStorage.setItem('usuario',JSON.stringify(this.infoUsuario))
+        console.log("LC: "+JSON.stringify(this.infoUsuario))
+        console.log("LC: DATOS SALIENTES DE LA BASE DE DATOS")
+        console.log("LC: "+localStorage.getItem('usuario'))
+        console.log("LC: DATOS GUARDADOS EN EL LOCALSTORAGE")
+        return this.infoUsuario
+      }).catch(e => {
+      })
+    }).catch(e => {
+    })
+  }
+
+// TABLA EXTRA_USUARIO
+almacenarExtraUsuario(rut:any, carrera:any, semestre: any, celular: any){
+  this.sqlite.create({
+    name: 'db.datos',
+    location: 'default'
+  }).then((db: SQLiteObject)=> {
+
+    db.executeSql('INSERT INTO EXTRA_USUARIO VALUES(?, ?, ?, ?)', [rut, carrera, semestre, celular]
+    ).then(() =>{
+      console.log("LC: EXTRA_USUARIO ALMACENADO")
+    }).catch(e => {
+      console.log("LC: EXTRA_USUARIO NO ALMACENADO")
+    })
+  }).catch(e => {
+    console.log("LC: BD NO CREADA")
+  })
+}
+
+
+
+
 }

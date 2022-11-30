@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DbService } from './services/db.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -11,9 +12,13 @@ export class AppComponent {
     { title: 'Perfil', url: '/perfil', icon: 'person' },
   ];
   public labels = [];
-  constructor(private router: Router) {}
-  
+  constructor(
+    private dbService: DbService,
+    private router: Router) {
+  }
+
   cerrarSesion(){
+    localStorage.removeItem('ingresado')
     this.router.navigate(['/login']);
   }
 }
