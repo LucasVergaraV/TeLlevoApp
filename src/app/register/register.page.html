@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="principal">
+    <img src="assets/img/Logo.png" alt="">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-title>Registrate !!!</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="full">
+        <ion-label position="stacked">R.U.T</ion-label>
+        <ion-input type="text" placeholder="Ingresa tu RUT" [(ngModel)]="rut"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input type="text" placeholder="Ingresa tu Nombre" [(ngModel)]="name"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="stacked" >Apellido</ion-label>
+        <ion-input type="text" placeholder="Ingresa tu primer Apellido" [(ngModel)]="lastName"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="stacked" >Usuario</ion-label>
+        <ion-input type="text" placeholder="Ingresa tu usuario de VivoDuoc" [(ngModel)]="user"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="stacked" >Contraseña</ion-label>
+        <ion-input type="text" placeholder="Crea una contraseña" [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button class="principal" expand="full"  >Registrarse</ion-button>
+          <ion-button class="secundario" expand="full" (click)="login()">Volver a inicio de sesion</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

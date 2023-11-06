@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="principal">
+    <ion-title>Mi viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Este es tu viaje</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-text >{{miViaje.inicio}}</ion-text>
+        <ion-text >{{miViaje.destino}}</ion-text>
+        <ion-text >{{miViaje.cobro}}</ion-text>
+        <ion-text >{{miViaje.pasajeros}}</ion-text>
+    </ion-card-content>
+    <ion-button  class="secundario" (click)="volver()" fill="clear">Volver a crear viaje</ion-button>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="principal">
+    
+    <ion-title>Crea un viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Crea un viaje y lleva a otros alumnos de DuocUC</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-input label="Inicio" labelPlacement="floating" placeholder="Punto de inicio"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Destino" labelPlacement="floating" placeholder="Donde termina el viaje"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Cobro" labelPlacement="floating" placeholder="Monto por pasajero" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Pasajeros" labelPlacement="floating" placeholder="Cantidad de pasajeros"></ion-input>
+      </ion-item>
+    </ion-card-content>
+    <ion-button  class="secundario" (click)="crearViaje()" >Crear viaje</ion-button>
+  </ion-card>
+
+</ion-content>
