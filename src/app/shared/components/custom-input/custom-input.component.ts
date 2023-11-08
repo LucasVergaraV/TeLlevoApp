@@ -22,7 +22,7 @@ export class CustomInputComponent  implements OnInit {
   ngOnInit() {
     if (this.type == 'password') this.isPassword = true;
   }
-
+// ----- mostrar contraseña (Boton)--------
   showOrHidePassword(){
     this.hide = !this.hide;
 
