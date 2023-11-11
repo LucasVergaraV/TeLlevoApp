@@ -62,12 +62,14 @@ export class SignUpPage implements OnInit {
       this.firebaseSvc.setDocument(path, this.form.value ).then(async res => {
 
           this.utilsSvc.saveInLocalStorage('user',this.form.value)
+          this.utilsSvc.routerLink('/main/home');
+          this.form.reset();
         
         })
         .catch((error) => {console.log(error);this.utilsSvc.presentToast({
             message: error.message,
             duration: 2500,
-            color: 'primary',
+            color: 'primary', 
             position: 'middle',
             icon: 'alert-circle-outline',
           });
