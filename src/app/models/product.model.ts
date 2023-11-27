@@ -4,5 +4,6 @@ export interface Product{
     inicio: string,
     pasajero: number,
     price: number,
-    uid: string
+    uid: string,
+    id: string
 }

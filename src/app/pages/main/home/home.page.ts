@@ -16,9 +16,8 @@ export class HomePage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
-  // product: Product[] = [];
-
   ngOnInit() {
+    this.user();
   }
   
 // ---- Cerrar Sesion ----
@@ -30,46 +29,58 @@ export class HomePage implements OnInit {
     return this.utilsSvc.getFromLocalStorage('user');
   }
   product(): Product{
+    this.miViaje = this.utilsSvc.getFromLocalStorage('lastTrip');
     return this.utilsSvc.getFromLocalStorage('lastTrip');
   }
   
 // La funcion ionViewWillEnter() se activa cada vez que el usuario entra a la pagina.
   ionViewWillEnter() {
-    this.getProduct();
-    this.user();
-  }
 
-  getProduct(){
-    let path = `products`;
-    let user = this.user();
-    
-    let sub = this.firebaseSvc.getCollectionData(path).subscribe({
-      next: (res: any) => {
-        console.log("coleccion de viajes");
-        console.log(res);
-        // this.product = res;
-        // Responde el viaje del usuario
-        this.miViaje = res.filter((respuesta) =>{
-          return respuesta.uid === user.uid;
-        })[0]
-        console.log("Tu viaje");
-        console.log(this.miViaje);
-        this.lastTrip(this.miViaje);
-        sub.unsubscribe();
-      }
-    })
-  }
-
-  lastTrip(value: any){
-    this.utilsSvc.saveInLocalStorage('lastTrip',value);
-    this.miViaje = value;
   }
 
 // ---- Agregar o actualizar producto ----
-  addUpdateProduct(){
+  addUpdateProduct(product?: Product){
     this.utilsSvc.presentModal({
       component: AddUpdateProductComponent,
-      cssClass: 'add-update-modal'
+      cssClass: 'add-update-modal',
+      componentProps: { product },
     });
+  }
+
+
+// ---- ELIMINAR UN VIAJE ----
+  async deleteProduct() {
+    let path = `products/${this.product().id}`;
+
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+
+    let imagePath = await this.firebaseSvc.getFilePath(this.product().image);
+    await this.firebaseSvc.deleteFile(imagePath);
+
+    this.firebaseSvc.deleteDocument(path).then(async (res) => {
+        localStorage.removeItem('lastTrip')
+        this.utilsSvc.saveInLocalStorage('checkTrip', false);
+        this.utilsSvc.presentToast({
+          message: 'Viaje eliminado con exito',
+          duration: 1500,
+          color: 'success',
+          position: 'middle',
+          icon: 'checkmark-circle-outline',
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.utilsSvc.presentToast({
+          message: error.message,
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'alert-circle-outline',
+        });
+      })
+      .finally(() => {
+        loading.dismiss();
+      });
   }
 }

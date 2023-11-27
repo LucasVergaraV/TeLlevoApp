@@ -3,10 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword ,createUserWithEmailAndPassword ,updateProfile, sendPasswordResetEmail  } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query } from '@angular/fire/firestore';
+import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { getStorage, uploadString, ref, getDownloadURL } from "firebase/storage"; 
+import { getStorage, uploadString, ref, getDownloadURL, deleteObject } from "firebase/storage"; 
 
 @Injectable({
   providedIn: 'root'
@@ -75,8 +75,17 @@ export class FirebaseService {
   getCollectionData(path: string, collectionQuery?: any){
     const ref = collection(getFirestore(), path);
     return collectionData(query(ref, collectionQuery), {idField: 'id'});
-
   }
+// ---------------
+// -------Actualizar un documento--------
+  updateDocument(path: string, data: any){ 
+    return updateDoc(doc(getFirestore(), path), data);
+  }
+// ---------------
+// -------Eliminar un documento--------
+deleteDocument(path: string){ 
+  return deleteDoc(doc(getFirestore(), path));
+}
 // ---------------
 // ============ALMACENAMIENTO============
 // -------Subir Imagen-------
@@ -86,4 +95,15 @@ export class FirebaseService {
     })
 
   }
+// -------Obtener path de una Imagen-------
+  async getFilePath(url: string){
+    return ref(getStorage(), url).fullPath;
+  }
+
+
+// ---- ELIMINAR ARCHIVOS DEL STORAGE ----
+  deleteFile(path: string){
+    return deleteObject(ref(getStorage(), path));
+  }
+
 }
