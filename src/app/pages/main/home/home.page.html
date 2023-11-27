@@ -1,7 +1,57 @@
 <app-header title="Inicio"></app-header>
 
 <ion-content [fullscreen]="true">
-<ion-button (click)="singOut()">
-  Click me
-</ion-button>
+  <ion-button (click)="singOut()">
+    Click me
+  </ion-button>
+
+  <ion-card color="light">
+    <img class="imgViaje" alt="" [src]="product().image" />
+    <ion-card-header>
+      <ion-card-title>Tu viaje</ion-card-title>
+      <ion-card-subtitle>Aca podras ver, modificar o eliminar el viaje que creaste.</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div>
+        <strong>Inicio : </strong>{{product().inicio}}
+      </div>
+      <div>
+        <strong>Final : </strong>{{product().final}}
+      </div>
+      <div>
+        <strong>Pasajeros : </strong>{{product().pasajero}}
+      </div>
+      <div>
+        <strong>Precio : </strong>{{ product().price | currency:'CLP'}}
+      </div>
+    </ion-card-content>
+
+    <!-- <ion-button class="secundario">
+      Action 1
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button class="secundario">
+      Action 2
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
+    </ion-button> -->
+    <div class="boton">
+      <ion-button mode="ios" class="principal">
+        Modificar
+        <ion-icon slot="end" name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button mode="ios" class="secundario">
+        Eliminar
+        <ion-icon slot="end" name="trash-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+  </ion-card>
+
+  <!-- Boton - Crear nuevo viaje -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <ion-fab-button (click)="addUpdateProduct()" class="secundario">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

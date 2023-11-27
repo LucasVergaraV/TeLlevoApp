@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
+import { UserExtra } from 'src/app/models/userExtra.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -16,6 +17,12 @@ export class AuthPage implements OnInit {
     password: new FormControl('', [Validators.required])
   })
 
+  formExtra = new FormGroup({
+    id: new FormControl(''),
+    checkTrip: new FormControl<boolean>(false),
+    uid: new FormControl('')
+  });
+
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
@@ -30,11 +37,11 @@ export class AuthPage implements OnInit {
 
 
       this.firebaseSvc.singIn(this.form.value as User).then(res => {
-
+        console.log(res);
         this.getUserInfo(res.user.uid);
-
       }).catch(error =>{
         console.log(error);
+        console.log('submit');
         this.utilsSvc.presentToast({
           message: error.message,
           duration: 2500,
@@ -54,17 +61,16 @@ export class AuthPage implements OnInit {
       const loading = await this.utilsSvc.loading();
       await loading.present();
 
-      let path = 'users/${uid} ';
-      delete this.form.value.password;
+      let path = `users/${uid}`;
 
       this.firebaseSvc.getDocument(path).then((user: User) => {
 
-          this.utilsSvc.saveInLocalStorage('user',user);
+          this.utilsSvc.saveInLocalStorage('user', user);
           this.utilsSvc.routerLink('/main/home');
           this.form.reset();
 
           this.utilsSvc.presentToast({
-            message: 'Bienvenido a TeLlevoApp ${user.name}',
+            message: `Bienvenido a TeLlevoApp ${user.name}`,
             duration: 1500,
             color: 'primary',
             position: 'middle',
@@ -73,6 +79,7 @@ export class AuthPage implements OnInit {
         
         })
         .catch((error) => {
+          console.log('submit');
           console.log(error);
           this.utilsSvc.presentToast({
             message: error.message,
