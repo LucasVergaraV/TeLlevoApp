@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { time } from 'console';
 import { Product } from 'src/app/models/product.model';
 import { User } from 'src/app/models/user.model';
 import { UserExtra } from 'src/app/models/userExtra.model';
@@ -23,6 +24,7 @@ export class AddUpdateProductComponent implements OnInit {
     final: new FormControl('', [Validators.required, Validators.minLength(4)]),
     pasajero: new FormControl(null, [Validators.required, Validators.min(1)]),
     price: new FormControl(null, [Validators.required, Validators.min(0)]),
+    time: new FormControl('',[Validators.required]),
   });
 
   firebaseSvc = inject(FirebaseService);

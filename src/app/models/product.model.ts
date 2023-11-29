@@ -5,5 +5,6 @@ export interface Product{
     pasajero: number,
     price: number,
     uid: string,
-    id: string
+    id: string,
+    time: string,
 }
