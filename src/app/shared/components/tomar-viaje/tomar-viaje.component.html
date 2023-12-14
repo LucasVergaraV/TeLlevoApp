@@ -1,0 +1,47 @@
+<app-header [isModal]="true" title="¿Te gusta este viaje?"></app-header>
+<ion-content [fullscreen]="true">
+  <ion-card color="light">
+    <img class="imgViaje" alt="" [src]="viaje.image" />
+    <ion-card-header>
+      <ion-card-title>Informacion del viaje</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div>
+        <strong>Inicio : </strong> {{viaje.inicio}}
+      </div>
+      <div>
+        <strong>Final : </strong> {{viaje.final}}
+      </div>
+      <div>
+        <strong>Pasajeros : </strong> {{viaje.pasajero}}
+      </div>
+      <div>
+        <strong>Precio : </strong> {{viaje.price | currency: 'CLP'}}
+      </div>
+      <div>
+        <strong>Hora de salida : </strong> {{viaje.time}}
+      </div>
+    </ion-card-content>
+    </ion-card>
+    <ion-card color="light">
+    <ion-card-header>
+      <ion-card-title>Informacion del conductor</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>
+        <strong>Nombre : </strong> {{creadorViaje?.name}}
+      </div>
+      <div>
+        <strong>Email : </strong> {{creadorViaje?.email}}
+      </div>
+    </ion-card-content>
+    <div class="boton">
+      <ion-button mode="ios" class="secundario" (click)="tomarViaje()" >
+        Tomar Viaje
+        <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+  </ion-card>
+</ion-content>

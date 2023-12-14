@@ -7,4 +7,5 @@ export interface Product{
     uid: string,
     id: string,
     time: string,
+    viajeCompleto: boolean,
 }

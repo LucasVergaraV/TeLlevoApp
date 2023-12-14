@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Product } from 'src/app/models/product.model';
 import { User } from 'src/app/models/user.model';
 import { UserExtra } from 'src/app/models/userExtra.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -12,10 +13,14 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class ProfilePage implements OnInit {
   miViaje:any;
+  viajeTomado: any;
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
   ngOnInit() {
+    this.getProduct();
+    this.user();    
+    this.obtenerViajeTomado();
   }
 
   user(): User{
@@ -34,8 +39,7 @@ export class ProfilePage implements OnInit {
 
 // La funcion ionViewWillEnter() se activa cada vez que el usuario entra a la pagina.
   ionViewWillEnter() {
-    this.getProduct();
-    this.user();
+
   }
 
   getProduct(){
@@ -71,5 +75,19 @@ export class ProfilePage implements OnInit {
       console.log("Viaje No Existe")
     }
     
+  }
+
+  obtenerViajeTomado(){
+    let path = `users/${this.user().uid}/viajeTomado`;
+    
+    let sub = this.firebaseSvc.getCollectionData(path).subscribe({
+      next: (res: any) => {
+        this.viajeTomado = res.filter((respuesta) =>{
+          return respuesta;
+        })[0]
+        console.log(res.length)
+        sub.unsubscribe();
+      }
+    })
   }
 }

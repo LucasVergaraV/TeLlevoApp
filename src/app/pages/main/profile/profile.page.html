@@ -5,9 +5,42 @@
   <ion-text class="principal" color="primary" type="ios">
     <br>
     <h1>Bienvenido {{user().name}} a TeLlevoApp</h1>
-    <h3>Crea o busca un viaje en nuestra app</h3>
   </ion-text>
-    
     <h4><strong> Tu correo:  </strong>{{user().email}} <ion-icon name="mail-outline"></ion-icon></h4>
+    <ion-card color="light">
+      <img class="imgViaje" alt="" [src]="viajeTomado?.image" />
+      <ion-card-header>
+        <ion-card-title>Viaje Tomado</ion-card-title>
+        <ion-card-subtitle>Ya estas en un viaje. Revisa su informacion.</ion-card-subtitle>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <div>
+          <strong>Inicio : </strong>{{viajeTomado?.inicio}}
+        </div>
+        <div>
+          <strong>Final : </strong>{{viajeTomado?.final}}
+        </div>
+        <div>
+          <strong>Pasajeros : </strong>{{viajeTomado?.pasajero}}
+        </div>
+        <div>
+          <strong>Precio : </strong>{{ viajeTomado?.price | currency:'CLP'}}
+        </div>
+        <div>
+          <strong>Hora de salida : </strong>{{ viajeTomado?.time }}
+        </div>
+      </ion-card-content>
+  
+      <div class="boton">
+        <ion-button mode="ios" class="secundario" >
+          Eliminar
+          <ion-icon slot="end" name="trash-outline"></ion-icon>
+        </ion-button>
+      </div>
+  
+    </ion-card>
+    
+    
   
 </ion-content>

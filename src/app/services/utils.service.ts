@@ -64,7 +64,7 @@ async takePicture(promptLabelHeader: string){
     const { data } = await modal.onWillDismiss();
     if(data) return data;
   }
-//
+//Cerrar modal
   dismissModal(data?: any){
     return this.modalCtrl.dismiss(data);
   }

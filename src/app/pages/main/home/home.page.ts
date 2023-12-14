@@ -12,7 +12,6 @@ import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  miViaje:any;
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
@@ -29,7 +28,6 @@ export class HomePage implements OnInit {
     return this.utilsSvc.getFromLocalStorage('user');
   }
   product(): Product{
-    this.miViaje = this.utilsSvc.getFromLocalStorage('lastTrip');
     return this.utilsSvc.getFromLocalStorage('lastTrip');
   }
   

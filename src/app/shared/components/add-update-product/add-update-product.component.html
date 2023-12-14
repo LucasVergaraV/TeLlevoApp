@@ -1,4 +1,4 @@
-<app-header [isModal]="true" title="Crea tu viaje"></app-header>
+<app-header [isModal]="true" [title]="product ? 'Modifica tu viaje' : 'Crea tu viaje'"></app-header>
 <ion-content>
     <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
         <!-- Si existe la imagen -->
@@ -72,7 +72,7 @@
         </div>
         <!-- BOTONES -->
         <ion-button expand="block" mode="ios" class="submit principal" type="submit" [disabled]="form.invalid">
-          Agregar Productos
+          {{product ? 'Modificar viaje' : 'Crear viaje'}}
         </ion-button>
       </form>
 </ion-content>
