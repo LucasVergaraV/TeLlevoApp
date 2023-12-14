@@ -25,6 +25,8 @@ export class AddUpdateProductComponent implements OnInit {
     pasajero: new FormControl(null, [Validators.required, Validators.min(1)]),
     price: new FormControl(null, [Validators.required, Validators.min(0)]),
     time: new FormControl('',[Validators.required]),
+    viajeCompleto: new FormControl(false),
+
   });
 
   firebaseSvc = inject(FirebaseService);

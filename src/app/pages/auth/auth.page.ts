@@ -1,9 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
-import { UserExtra } from 'src/app/models/userExtra.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Geolocation, Position } from '@capacitor/geolocation';
+import { GoogleMap } from '@capacitor/google-maps';
 
 @Component({
   selector: 'app-auth',
@@ -26,8 +27,18 @@ export class AuthPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
+  location: Position[];
+
   ngOnInit() {
+    this.printCurrentPosition();
+    
+    
   }
+  printCurrentPosition(){
+      const coordinates = Geolocation.getCurrentPosition();
+    
+      console.log('Current position:', coordinates);
+    }
 
   async submit(){
     if (this.form.valid){
@@ -94,5 +105,23 @@ export class AuthPage implements OnInit {
         });
     }
   }
+
+  apiKey = 'AIzaSyB_41HlqKXl-IrI1LiLKZB-cpm4NfSuoUQ';
+
+  mapRef = document.getElementById('map');
+  
+  newMap = GoogleMap.create({
+    id: 'map', // Unique identifier for this map instance
+    element: this.mapRef, // reference to the capacitor-google-map element
+    apiKey: this.apiKey, // Your Google Maps API Key
+    config: {
+      center: {
+        // The initial position to be rendered by the map
+        lat: 33.6,
+        lng: -117.9,
+      },
+      zoom: 8, // The initial zoom level to be rendered by the map
+    },
+  });
 
 }
